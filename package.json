@@ -1,0 +1,67 @@
+{
+  "name": "no-receipts",
+  "version": "0.1.0",
+  "description": "No receipts, no \"done\". Blocks a coding agent from ending a turn on a claim that is not backed by a tool call that actually succeeded.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "no-receipts": "./dist/cli.js"
+  },
+  "files": [
+    "dist/**",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && chmod +x dist/cli.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "keywords": [
+    "ai-agents",
+    "agentic-coding",
+    "claude-code",
+    "cursor",
+    "codex",
+    "mcp",
+    "llm",
+    "hallucination",
+    "verification",
+    "guardrails",
+    "receipts",
+    "no-receipts",
+    "completion-gate",
+    "false-completion",
+    "claim-verification",
+    "ai-safety",
+    "developer-tools",
+    "cli",
+    "typescript",
+    "quality-assurance"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/os1249399459/no-receipts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/os1249399459/no-receipts/issues"
+  },
+  "homepage": "https://github.com/os1249399459/no-receipts#readme"
+}

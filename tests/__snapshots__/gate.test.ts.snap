@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renderFeedback > is stable for a fixed issue list 1`] = `
+"Your claims were rejected (attempt 1/1). Fix every issue below before ending the turn.
+
+1. [claim_invalid] at claims.0.evidence_ids: need evidence
+
+Allowed statuses: done | partial | blocked | unknown.
+A "done" claim needs at least one evidence_id from a tool call that actually succeeded.
+An "unknown" or "blocked" claim must be disclosed in open_questions or unverified_assumptions."
+`;
