@@ -27,9 +27,13 @@ jobs:
 
       - run: npm run typecheck
 
-      - run: npm test
-
+      # Build BEFORE test: the CLI contract tests exec dist/cli.js, so without
+      # this the whole file fails with "cannot find module" and every exit-code
+      # assertion is meaningless. ci.yml already had this order; release.yml
+      # did not, and the first tagged run proved it.
       - run: npm run build
+
+      - run: npm test
 
       # The trusted publisher on npmjs.com grants "npm stage publish" only, so
       # this stages instead of publishing directly. A maintainer then approves
