@@ -183,6 +183,16 @@ One abort = one line, same shape every time:
 
 Quote, backslash, and newline are escaped inside the values, so a claim text containing a newline cannot forge a second line. `grep '\[no-receipts\] abort'` gives you a complete history with no parsing.
 
+## Start here
+
+Three issues are open, all labelled `good first issue`, all scoped to a single file:
+
+- [#1 Implement HttpVerifier](https://github.com/os1249399459/no-receipts/issues/1) — status code and JSON-path assertions
+- [#2 Implement GitHubVerifier](https://github.com/os1249399459/no-receipts/issues/2) — PR merged, commit on branch, checks passed
+- [#3 Make the CLI tests portable to Windows](https://github.com/os1249399459/no-receipts/issues/3) — the CI matrix includes Windows and the tests are Unix-shaped
+
+Questions that do not need a diff yet belong in [Discussions](https://github.com/os1249399459/no-receipts/discussions).
+
 ## Contributing
 
 The two unimplemented verifiers (`http`, `github`) are the highest-leverage way in — a verifier is one class with a single `verify()` method, and `CliVerifier` is the reference at ~80 lines.
