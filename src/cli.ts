@@ -55,14 +55,20 @@ async function main(): Promise<number> {
     },
   })
 
+  // The documented input shape carries `claims` as a bare array, but the gate
+  // validates a `{ claims: [...] }` document. Accept both: without this the
+  // documented `npx no-receipts claims.json` can never return 0.
+  const rawClaims = input.claims
+  const document = Array.isArray(rawClaims) ? { claims: rawClaims } : rawClaims
+
   const decision = await gate.evaluate({
-    output: input.claims,
+    output: document,
     turn: input.turn ?? 1,
     ...(input.sessionId ? { sessionId: input.sessionId } : {}),
   })
 
   if (decision.kind === 'complete') {
-    console.log('[receipts] complete')
+    console.log('[no-receipts] complete')
     return 0
   }
   if (decision.kind === 'feedback') {
