@@ -4,6 +4,13 @@
 
 > *No receipts, no done.*
 
+**Done is better than perfect — as long as done is provable.**
+
+That distinction is the whole package. Most tools in this space are quality tools: they help
+you do better work. This one is an honesty tool: it does not care whether the work was good,
+only whether the claim matches what actually ran. A beautiful refactor that passed no tests and
+a one-line fix that passed them are judged identically here.
+
 Zero dependencies. No model in the loop. ~1,000 lines, one job.
 
 The name is the rule. In the culture this comes from, you don't get to make a claim without
