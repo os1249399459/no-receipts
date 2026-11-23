@@ -19,6 +19,10 @@ jobs:
           node-version: 24      # ships npm >= 11.5.1, required for OIDC publish
           registry-url: https://registry.npmjs.org
 
+      # Staged publishing needs npm >= 11.15.0; Node 24's bundled npm may be
+      # older than that, so pin it explicitly rather than hope.
+      - run: npm install -g npm@^11.15.0
+
       - run: npm ci
 
       - run: npm run typecheck
@@ -27,6 +31,11 @@ jobs:
 
       - run: npm run build
 
+      # The trusted publisher on npmjs.com grants "npm stage publish" only, so
+      # this stages instead of publishing directly. A maintainer then approves
+      # the staged version with 2FA — that interactive step is the point of the
+      # restriction, and it cannot be automated away.
+      - run: npm stage publish
+
       # No NODE_AUTH_TOKEN / NPM_TOKEN anywhere: a leftover token silently
-      # overrides OIDC and the publish fails with ENEEDAUTH or a 404 on PUT.
-      - run: npm publish --access public
+      # overrides OIDC and the run fails with ENEEDAUTH or a 404 on PUT.
