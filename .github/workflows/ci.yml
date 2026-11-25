@@ -20,6 +20,12 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: npm
+      # Drift guard, FIRST: fail fast before npm ci if the shared-invariants
+      # file has been deleted, renamed, or gutted. Pure fs read, no deps, so it
+      # costs nothing to run before the slow steps.
+      - name: Check cross-repo contract anchors
+        run: node scripts/check-contract.mjs
+
       - run: npm ci
       - run: npm run typecheck
       - run: npm run build
