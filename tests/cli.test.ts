@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest'
+import { afterAll, describe, expect, it } from 'vitest'
 import { execFile } from 'node:child_process'
-import { writeFileSync, mkdtempSync } from 'node:fs'
+import { writeFileSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -10,6 +10,8 @@ const execFileAsync = promisify(execFile)
 const here = dirname(fileURLToPath(import.meta.url))
 const CLI = join(here, '..', 'dist', 'cli.js')
 const dir = mkdtempSync(join(tmpdir(), 'nr-cli-'))
+
+afterAll(() => rmSync(dir, { recursive: true, force: true }))
 
 interface Run {
   code: number
@@ -51,6 +53,13 @@ describe('CLI contract', () => {
     expect(result.stdout).toContain('One of them is lying')
     expect(result.stdout).toContain('ALLOWED')
     expect(result.stdout).toContain('BLOCKED')
+  })
+
+  it('passes an input path with spaces to Node without a shell', async () => {
+    const path = writeInput('empty turn.json', { turn: 1, evidence: [], claims: [] })
+    const result = await run([path])
+    expect(result.code).toBe(0)
+    expect(result.stderr).toBe('')
   })
 
   it('exits 0 for a done claim backed by a successful tool call (bare array shape)', async () => {
